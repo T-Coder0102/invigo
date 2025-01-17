@@ -1,0 +1,59 @@
+.home{
+    width: 100%;
+    min-height: 800px;
+    .navbar{
+        width:100%;
+        top: 0;
+        right: auto;
+        padding: 0 5%;
+        display: flex;
+        position: fixed;
+        align-items: center;
+        justify-content: space-between;
+        background-color: #fff;
+        .logo{
+            width: 7%;
+            border-radius: 50%;
+        }
+        .navList{
+            display: flex;
+            li{
+                margin: 0 20px 0 0;
+                font-family: "Inter",sans-serif;
+                font-family: 18px;
+            
+            }
+        }
+        .lan{
+            display: flex;
+            li{
+                margin: 0 10px 0 0;
+                font-family: "Inter",sans-serif;
+                font-family: 18px;
+
+            }
+        }
+    }
+    .homepage{
+        padding: 7% 3% 0 3%;
+        background-image: url("../../../public/images/bcimage.jpg");
+        background-size: cover;
+        background-position: center;
+        min-height: 700px;
+
+        h1{
+            color: aliceblue;
+        }
+        h2{
+            color: #fff;
+        }
+        .home-btn{
+            background-color: #0d4a41;
+            border: none;
+            padding: 20px 30px;
+            color: #fff;
+            font-size: 18px;
+            border-radius: 20px;
+        }
+    }
+}
