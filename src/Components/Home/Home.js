@@ -1,6 +1,6 @@
 import "./Home.scss";
 import React from "react";
-import { useState } from "react";
+import {useEffect, useRef, useState } from "react";
 const Home = () => {
   const contentUz = {
     navlist: {
@@ -11,6 +11,8 @@ const Home = () => {
     },
     homepage: {
       btn: "Bepul maslahat olish",
+      title: "Xush kelibsiz!",
+      text: "Biznesingizni yangi bosqichga olib chiqish uchun bu yerda sizga yordam beramiz. Sifatli xizmatlarimiz va innovatsion yechimlarimiz bilan sizning brendingizni rivojlantirishni maqsad qilganmiz. Biz bilan birga muvaffaqiyat sari qadam tashlang!",
     },
     services: {
       title: "Bizning xizmatlarimiz",
@@ -21,13 +23,16 @@ const Home = () => {
         },
         item2: {
           title: "Youtube Management",
-          text: "bu - YouTube platformasida brend yoki shaxsiy kanalni rivojlantirish va optimallashtirish xizmatidir.",
+          text: "YouTube platformasida brend yoki shaxsiy kanalni rivojlantirish va optimallashtirish xizmatidir.",
         },
         item3: {
           title: "Brending",
           text: "NAMING, BRANDING, PACKAGING, CUSTOMER DEVELOPMENT, BRANDBOOK",
         },
       },
+    },
+    cases: {
+      title: "Bizning loyihalarimiz",
     },
     form: {
       title: "Biz bilan bog'laning.",
@@ -84,6 +89,8 @@ const Home = () => {
     },
     homepage: {
       btn: "Получить бесплатную консультацию",
+      title: "Добро пожаловать!",
+      text: "Мы здесь, чтобы помочь вывести ваш бизнес на новый уровень. С нашими качественными услугами и инновационными решениями мы стремимся развивать ваш бренд. Сделайте шаг к успеху вместе с нами!",
     },
     services: {
       title: "Наши услуги",
@@ -101,6 +108,9 @@ const Home = () => {
           text: "НАИМЕНОВАНИЕ, БРЕНДИНГ, УПАКОВКА, РАЗВИТИЕ КЛИЕНТОВ, БРЕНДБУК",
         },
       },
+    },
+    cases: {
+      title: "Наши проекты",
     },
     form: {
       title: "Связаться с нами.",
@@ -169,10 +179,43 @@ const Home = () => {
       currentIndex++;
     }
   };
+  const [isInView, setIsInView] = useState(false);
+  
+  const teamCardsRef = useRef([]); // Array of refs to each team card
+  
+  // Intersection Observer callback
+  const handleIntersection = (entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target); // Stop observing once it's in view
+      }
+    });
+  };
+
+  useEffect(() => {
+    const options = {
+      threshold: 0.5, // Trigger animation when 50% of the card is in view
+    };
+    
+    const observer = new IntersectionObserver(handleIntersection, options);
+    
+    // Observe valid refs only
+    teamCardsRef.current
+      .filter(card => card !== null) // Ensure no null values
+      .forEach(card => observer.observe(card));
+    
+    // Clean up observer on component unmount
+    return () => {
+      teamCardsRef.current
+        .filter(card => card !== null) // Filter out null values
+        .forEach(card => observer.unobserve(card));
+    };
+  }, []);
   return (
     <div className="home">
       <div className="navbar">
-        <img src="../../images/logo.png" alt="Logo Invigo" className="logo" />
+        <p className="logo">invigo.</p>
         <ul className="navList">
           <li>
             <a href="#aboutus">{content.navlist.l1}</a>
@@ -193,11 +236,10 @@ const Home = () => {
         </ul>
       </div>
       <div className="homepage">
-        <h1>HomePage</h1>
-        <h2>There will be some text</h2>
-        <div className="contact-team">
-          <a href="#contact">{content.homepage.btn}</a>
-        </div>
+        <h1>{content.homepage.title}</h1>
+        <h2>{content.homepage.text}</h2>
+
+        <button className="contact-team"><a href="#contact">{content.homepage.btn}</a></button>
       </div>
       <div className="services" id="services">
         <h1>{content.services.title}</h1>
@@ -228,6 +270,7 @@ const Home = () => {
         </div> */}
       </div>
       <div className="cases" id="cases">
+        <h2>{content.cases.title}</h2>
         <ul className="caseList">
           <li>
             <img src="../../images/cases1.png" alt="Cases1" className="items" />
@@ -279,20 +322,18 @@ const Home = () => {
       <div className="teamMembers" id="teamMembers">
         <h2>{content.teamMember.title}</h2>
         <div className="team-members">
-          <div className="team-member">
-            <img src="team1.jpg" alt={content.teamMember.member1.name} />
+          <div className="team-member" ref={(el) => (teamCardsRef.current[0] = el)}>
+            <img src="../../images/founder.png" alt={content.teamMember.member1.name} />
             <h3>{content.teamMember.member1.name}</h3>
             <span>{content.teamMember.member1.position}</span>
           </div>
-          <div className="team-member">
-            <img src="team2.jpg" alt={content.teamMember.member2.name} />
+          <div className="team-member"  ref={(el) => (teamCardsRef.current[1] = el)}>
+            <img src="../../images/ceo.png" alt={content.teamMember.member2.name} />
             <h3>{content.teamMember.member2.name}</h3>
             <span>{content.teamMember.member2.position}</span>
           </div>
         </div>
-        <div class="contact-team">
-          <a href="#contact">{contentUz.homepage.btn}</a>
-        </div>
+        <button className="contact-team"><a href="#contact">{content.homepage.btn}</a></button>
       </div>
       <div className="contactForm" id="contact">
         <div className="form-container">
@@ -349,10 +390,9 @@ const Home = () => {
         <div className="footer-list">
           <div className="firstPart">
             <img src="../../images/logo.png" alt="Logo" className="logo" />
-            <p>there will be some text</p>
             <ul className="social-media">
               <li>
-                <a>
+                <a href="to:+998887882530">
                   <img
                     src="../../images/phone.png"
                     alt="Phone"
@@ -370,7 +410,7 @@ const Home = () => {
                 </a>
               </li>
               <li>
-                <a>
+                <a href="https://www.instagram.com/invigo.uz/">
                   <img
                     src="../../images/instagramwhite.png"
                     alt="Instagram"
@@ -384,16 +424,16 @@ const Home = () => {
             <h2>{content.footer.secondPart.title}</h2>
             <ul className="list">
               <li>
-                <a href="#">{content.navlist.l1}</a>
+                <a href="#aboutus">{content.navlist.l1}</a>
               </li>
               <li>
-                <a href="#">{content.navlist.l2}</a>
+                <a href="#services">{content.navlist.l2}</a>
               </li>
               <li>
-                <a href="#">{content.navlist.l3}</a>
+                <a href="#cases">{content.navlist.l3}</a>
               </li>
               <li>
-                <a href="#">{content.navlist.l4}</a>
+                <a href="#contact">{content.navlist.l4}</a>
               </li>
             </ul>
           </div>
