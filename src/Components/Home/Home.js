@@ -1,6 +1,6 @@
 import "./Home.scss";
 import React from "react";
-import {useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 const Home = () => {
   const contentUz = {
     navlist: {
@@ -180,36 +180,51 @@ const Home = () => {
     }
   };
   const [isInView, setIsInView] = useState(false);
-  
-  const teamCardsRef = useRef([]); // Array of refs to each team card
-  
-  // Intersection Observer callback
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [toggleMenuOpen,setToggleMenuOpen]=useState("toggleMenu");
+  const handleToggleMenu =()=>{
+    if(isMenuOpen==false){
+      setIsMenuOpen(true);
+    }
+    else{
+      setIsMenuOpen(false);
+    }
+    if(toggleMenuOpen=="toggleMenu"){
+      setToggleMenuOpen("menu-open");
+    }else{
+      setToggleMenuOpen("toggleMenu")
+    }
+    
+  }
+
+  const teamCardsRef = useRef([]); //
+
   const handleIntersection = (entries, observer) => {
-    entries.forEach(entry => {
+    entries.forEach((entry) => {
       if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
+        entry.target.classList.add("visible");
         observer.unobserve(entry.target); // Stop observing once it's in view
       }
     });
   };
 
   useEffect(() => {
+    setIsMenuOpen(false);
     const options = {
-      threshold: 0.5, // Trigger animation when 50% of the card is in view
+      threshold: 0.5,
     };
-    
+
     const observer = new IntersectionObserver(handleIntersection, options);
-    
-    // Observe valid refs only
+
     teamCardsRef.current
-      .filter(card => card !== null) // Ensure no null values
-      .forEach(card => observer.observe(card));
-    
+      .filter((card) => card !== null)
+      .forEach((card) => observer.observe(card));
+
     // Clean up observer on component unmount
     return () => {
       teamCardsRef.current
-        .filter(card => card !== null) // Filter out null values
-        .forEach(card => observer.unobserve(card));
+        .filter((card) => card !== null) // Filter out null values
+        .forEach((card) => observer.unobserve(card));
     };
   }, []);
   return (
@@ -234,12 +249,39 @@ const Home = () => {
           <li onClick={handleUz}>UZ</li>
           <li onClick={handleRu}>РУ</li>
         </ul>
+        <div className={toggleMenuOpen} onClick={handleToggleMenu}>
+          <span className="first"></span>
+          <span className="second"></span>
+          <span className="third"></span>
+        </div>
+        <ul className="mobNav">
+          <li>
+            <a href="#aboutus">{content.navlist.l1}</a>
+          </li>
+          <li>
+            <a href="#services">{content.navlist.l2}</a>
+          </li>
+          <li>
+            <a href="#cases">{content.navlist.l3}</a>
+          </li>
+          <li>
+            <a href="#contact">{content.navlist.l4}</a>
+          </li>
+          <li>
+            <ul className="mobLan">
+              <li onClick={handleUz}>UZ</li>
+              <li onClick={handleRu}>РУ</li>
+            </ul>
+          </li>
+        </ul>
       </div>
       <div className="homepage">
         <h1>{content.homepage.title}</h1>
         <h2>{content.homepage.text}</h2>
 
-        <button className="contact-team"><a href="#contact">{content.homepage.btn}</a></button>
+        <button className="contact-team">
+          <a href="#contact">{content.homepage.btn}</a>
+        </button>
       </div>
       <div className="services" id="services">
         <h1>{content.services.title}</h1>
@@ -322,18 +364,32 @@ const Home = () => {
       <div className="teamMembers" id="teamMembers">
         <h2>{content.teamMember.title}</h2>
         <div className="team-members">
-          <div className="team-member" ref={(el) => (teamCardsRef.current[0] = el)}>
-            <img src="../../images/founder.png" alt={content.teamMember.member1.name} />
+          <div
+            className="team-member"
+            ref={(el) => (teamCardsRef.current[0] = el)}
+          >
+            <img
+              src="../../images/founder.png"
+              alt={content.teamMember.member1.name}
+            />
             <h3>{content.teamMember.member1.name}</h3>
             <span>{content.teamMember.member1.position}</span>
           </div>
-          <div className="team-member"  ref={(el) => (teamCardsRef.current[1] = el)}>
-            <img src="../../images/ceo.png" alt={content.teamMember.member2.name} />
+          <div
+            className="team-member"
+            ref={(el) => (teamCardsRef.current[1] = el)}
+          >
+            <img
+              src="../../images/ceo.png"
+              alt={content.teamMember.member2.name}
+            />
             <h3>{content.teamMember.member2.name}</h3>
             <span>{content.teamMember.member2.position}</span>
           </div>
         </div>
-        <button className="contact-team"><a href="#contact">{content.homepage.btn}</a></button>
+        <button className="contact-team">
+          <a href="#contact">{content.homepage.btn}</a>
+        </button>
       </div>
       <div className="contactForm" id="contact">
         <div className="form-container">
