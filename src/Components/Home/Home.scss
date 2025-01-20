@@ -704,5 +704,8 @@
         justify-content: center;
       }
     }
+    .homepage, .contactForm, .teamMembers, .services, .about-us .cases{
+      display: none;
+    }
   }
 }
