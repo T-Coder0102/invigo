@@ -19,7 +19,7 @@ const Home = () => {
       list: {
         item1: {
           title: "SMM",
-          text: "smm management, vidoe yoki reel tayyorlash, kopyvriting, target (facebook, instagram va google), grafik design, analyitka.",
+          text: "SMM management, video yoki reel tayyorlash, copywriting, target (facebook, instagram va google), grafik design, analitics.",
         },
         item2: {
           title: "Youtube Management",
@@ -36,7 +36,7 @@ const Home = () => {
     },
     form: {
       title: "Biz bilan bog'laning.",
-      placeholder1: "F.I.O",
+      placeholder1: "F.I.O:",
       placeholder2: "Telefon raqamingiz:",
       placeholder3: "Instagram akkauntingiz:",
       placeholder4: "Kompaniya nomi:",
@@ -63,11 +63,11 @@ const Home = () => {
       title: "Bizning jamoa bilan tanishing!",
       member1: {
         name: "Jasurbek Fayzullayev",
-        position: "Asos soluvchi",
+        position: "Founder",
       },
       member2: {
         name: "Durbek Borotaliyev",
-        position: "Bosh ijrochi direktor",
+        position: "CEO",
       },
     },
     footer: {
@@ -76,7 +76,7 @@ const Home = () => {
       },
       lastPart: {
         phone: "Telefon raqam:",
-        email: "Email manzili",
+        email: "Email manzili:",
       },
     },
   };
@@ -97,11 +97,11 @@ const Home = () => {
       list: {
         item1: {
           title: "СММ",
-          text: "управление смм, создание видео или рилса, копирайтинг, таргетинг (facebook, instagram и google), графический дизайн, аналитика.",
+          text: "Справление СММ, создание видео или рилса, копирайтинг, таргетинг (facebook, instagram и google), графический дизайн, аналитика.",
         },
         item2: {
           title: "YouTube Management",
-          text: "это услуга по развитию и оптимизации бренда или личного канала на платформе YouTube.",
+          text: "Это услуга по развитию и оптимизации бренда или личного канала на платформе YouTube.",
         },
         item3: {
           title: "Брендинг",
@@ -114,7 +114,7 @@ const Home = () => {
     },
     form: {
       title: "Связаться с нами.",
-      placeholder1: "Ф.И.О",
+      placeholder1: "Ф.И.ОЖ",
       placeholder2: "Ваш номер телефона:",
       placeholder3: "Ваш Instagram аккаунт:",
       placeholder4: "Название компании:",
@@ -141,11 +141,11 @@ const Home = () => {
       title: "Познакомьтесь с нашей командой!",
       member1: {
         name: "Джасурбек Файзуллаев",
-        position: "Основатель",
+        position: "Founder",
       },
       member2: {
         name: "Дурбек Бороталиев",
-        position: "Главный исполнительный директор",
+        position: "CEO",
       },
     },
     footer: {
@@ -154,7 +154,7 @@ const Home = () => {
       },
       lastPart: {
         phone: "Телефон:",
-        email: "Электронная почта",
+        email: "Электронная почта:",
       },
     },
   };
@@ -167,35 +167,22 @@ const Home = () => {
   const handleUz = () => {
     setContent(contentUz);
   };
-  const handlePrev = () => {
-    if (currentIndex > 0) {
-      currentIndex--;
-      carousel.style.transform = `translateX(-${currentIndex * 320}px)`; // Adjust for container width + gap
-    }
-  };
-
-  const handleNext = () => {
-    if (currentIndex < carousel.children.length - 3) {
-      currentIndex++;
-    }
-  };
   const [isInView, setIsInView] = useState(false);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [toggleMenuOpen,setToggleMenuOpen]=useState("toggleMenu");
-  const handleToggleMenu =()=>{
-    if(isMenuOpen==false){
-      setIsMenuOpen(true);
-    }
-    else{
-      setIsMenuOpen(false);
-    }
-    if(toggleMenuOpen=="toggleMenu"){
+  const [toggleMenuOpen, setToggleMenuOpen] = useState("toggleMenu");
+  const [burger, setBurger] = useState("mobnav");
+  const handleToggleMenu = () => {
+    if (toggleMenuOpen == "toggleMenu") {
       setToggleMenuOpen("menu-open");
-    }else{
-      setToggleMenuOpen("toggleMenu")
+      setBurger("mobNav");
+    } else {
+      setToggleMenuOpen("toggleMenu");
+      setBurger("mobnav");
     }
-    
-  }
+  };
+  const [name, setName]=useState("");
+  const [phone, setPhone]=useState("");
+  const [insta, setInsta]=useState("");
+  const [compName,setCompName]=useState("")
 
   const teamCardsRef = useRef([]); //
 
@@ -209,7 +196,10 @@ const Home = () => {
   };
 
   useEffect(() => {
-    setIsMenuOpen(false);
+    setToggleMenuOpen("toggleMenu");
+    if (toggleMenuOpen == "toggleMenu") {
+      setBurger("mobnav");
+    }
     const options = {
       threshold: 0.5,
     };
@@ -254,7 +244,7 @@ const Home = () => {
           <span className="second"></span>
           <span className="third"></span>
         </div>
-        <ul className="mobNav">
+        <ul className={burger}>
           <li>
             <a href="#aboutus">{content.navlist.l1}</a>
           </li>
@@ -267,12 +257,10 @@ const Home = () => {
           <li>
             <a href="#contact">{content.navlist.l4}</a>
           </li>
-          <li>
-            <ul className="mobLan">
-              <li onClick={handleUz}>UZ</li>
-              <li onClick={handleRu}>РУ</li>
-            </ul>
-          </li>
+          <ul className="mobLan">
+            <li onClick={handleUz}>UZ</li>
+            <li onClick={handleRu}>РУ</li>
+          </ul>
         </ul>
       </div>
       <div className="homepage">
@@ -445,7 +433,7 @@ const Home = () => {
       <footer className="footer-container">
         <div className="footer-list">
           <div className="firstPart">
-            <img src="../../images/logo.png" alt="Logo" className="logo" />
+            <p className="logo">invigo.</p>
             <ul className="social-media">
               <li>
                 <a href="to:+998887882530">
@@ -501,11 +489,12 @@ const Home = () => {
               </li>
               <li>{content.footer.lastPart.email}</li>
               <li>
-                <a href="mailto:gemhunteruz@gmail.com">gemhunteruz@gmail.com</a>
+                <a href="mailto:info@invigo.uz">info@invigo.uz</a>
               </li>
             </ul>
           </div>
         </div>
+        <p className="text">This website is designed by <a href="https://t.me/t1mur_25">Timur Joldasbayev</a>.</p>
       </footer>
     </div>
   );

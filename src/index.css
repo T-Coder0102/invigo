@@ -9,7 +9,7 @@
 li, img, button{
     cursor: pointer;
 }
-p,h1,h2,h3,li{
+p,h1,h2,h3,li,label,input{
     font-family: "Noto Sans",sans-serif;
 }
 
