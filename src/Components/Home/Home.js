@@ -179,10 +179,7 @@ const Home = () => {
       setBurger("mobnav");
     }
   };
-  const [name, setName]=useState("");
-  const [phone, setPhone]=useState("");
-  const [insta, setInsta]=useState("");
-  const [compName,setCompName]=useState("")
+ 
 
   const teamCardsRef = useRef([]); //
 
@@ -494,7 +491,10 @@ const Home = () => {
             </ul>
           </div>
         </div>
-        <p className="text">This website is designed by <a href="https://t.me/t1mur_25">Timur Joldasbayev</a>.</p>
+        <p className="text">
+          This website is designed by{" "}
+          <a href="https://t.me/t1mur_25">Timur Joldasbayev</a>.
+        </p>
       </footer>
     </div>
   );
