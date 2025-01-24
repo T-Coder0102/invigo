@@ -1,23 +1,26 @@
 .home {
   width: 100%;
   .logoPage {
+    position: absolute;
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: 100%;
     background-color: black;
     opacity: 1;
-    animation: fadeOut 1s forwards 2s; /* Fade out the background */
+    animation: fadeOut 1.5s forwards 3s; /* Smooth fade-out with a slight delay */
     visibility: visible;
     margin: 0;
     overflow: hidden;
+    z-index: 1;
     p {
       color: white;
       font-size: 3rem;
-      font-family: 'Lexend giga';
+      font-family: "Lexend Giga", sans-serif;
       opacity: 0;
-      transform: scale(0);
-      animation: popup 2s forwards, disappear 1.5s forwards 1s;
+      transform: scale(0.8) translateY(20px); /* Subtle starting position */
+      animation: popup 1.8s forwards, disappear 1.5s forwards 2.5s;
     }
   }
   .navbar {
@@ -30,6 +33,7 @@
     align-items: center;
     justify-content: space-between;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 0;
     .toggleMenu {
       display: none;
     }
@@ -85,7 +89,7 @@
   }
   .homepage {
     padding: 7% 3%;
-    background-image: url("../../../public/images/bcimage.jpg");
+    background-image: url("../../../public/images/bcimage1.jpg");
     background-size: cover;
     background-position: center;
     min-height: 695px;
@@ -562,40 +566,42 @@
   @keyframes popup {
     0% {
         opacity: 0;
-        transform: scale(0);
+        transform: scale(0.8) translateY(20px); /* Start smaller and slightly lower */
     }
     50% {
         opacity: 1;
-        transform: scale(1.2);
+        transform: scale(1.1) translateY(0); /* Slightly overshoot for emphasis */
     }
     100% {
         opacity: 1;
-        transform: scale(1);
+        transform: scale(1) translateY(0); /* Settle into place */
     }
 }
+
 @keyframes disappear {
     0% {
         opacity: 1;
-        transform: scale(1);
+        transform: scale(1) translateY(0); /* Fully visible */
     }
     100% {
         opacity: 0;
-        transform: scale(0);
+        transform: scale(0.9) translateY(-10px); /* Fade out while shrinking slightly */
     }
 }
+
 @keyframes fadeOut {
     0% {
         opacity: 1;
         visibility: visible;
     }
-    99% {
-        opacity: 1;
-        visibility: visible;
-      }
+    90% {
+        opacity: 0.3;
+        visibility: visible; /* Add a slight lingering fade */
+    }
     100% {
         opacity: 0;
         visibility: hidden;
-        display: none; /* Set visibility to hidden at the end */
+        display: none; /* Ensure hidden at the end */
     }
 }
   @keyframes fadeIn {

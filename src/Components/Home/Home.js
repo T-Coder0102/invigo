@@ -89,7 +89,6 @@ const Home = () => {
     },
     homepage: {
       btn: "Получить бесплатную консультацию",
-      title: "Digital-маркетинговое агентство для бизнесменов",
       text: "Привлекаем перспективных клиентов, увеличиваем количество посещений офиса продаж и повышаем конкурентоспособность бизнесменов.",
     },
     services: {
@@ -266,9 +265,10 @@ const Home = () => {
           </ul>
         </ul>
       </div>
+      
       <div className="homepage">
-        {lan=='uz' && (<h1><span>Biznessmanlar</span> uchun digital marketing agentligi</h1>)}
-        {lan=='ru' && (<h1>Digital-маркетинговое агентство для  <span>бизнесменов</span></h1>)}
+        {lan=='uz' && (<h1><span>Biznessingiz</span> uchun digital marketing agentligi.</h1>)}
+        {lan=='ru' && (<h1>Digital-маркетинговое агентство для  <span>бизнеса.</span></h1>)}
         <h2>{content.homepage.text}</h2>
 
         <button className="contact-team">
