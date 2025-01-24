@@ -194,6 +194,8 @@ const Home = () => {
     });
   };
 
+  const requestForm=[];
+
   useEffect(() => {
     setToggleMenuOpen("toggleMenu");
     if (toggleMenuOpen == "toggleMenu") {
@@ -339,7 +341,7 @@ const Home = () => {
           </div>
           <div className="fact-card">
             <img
-              src="../../images/instagram.png"
+              src="../../images/instagramwhite.png"
               alt="Instagram images"
               className="fact-icon"
             />
