@@ -11,8 +11,8 @@ const Home = () => {
     },
     homepage: {
       btn: "Bepul maslahat olish",
-      title: "Xush kelibsiz!",
-      text: "Biznesingizni yangi bosqichga olib chiqish uchun bu yerda sizga yordam beramiz. Sifatli xizmatlarimiz va innovatsion yechimlarimiz bilan sizning brendingizni rivojlantirishni maqsad qilganmiz. Biz bilan birga muvaffaqiyat sari qadam tashlang!",
+      title: "Ishbilarmonlar uchun digital marketing agentligi" ,
+      text: "Biz istiqbolli mijozlarni jalb qilamiz, savdo ofisiga tashriflar sonini oshiramiz va ishbilarmonlarning raqobatbardoshligini oshiramiz.",
     },
     services: {
       title: "Bizning xizmatlarimiz",
@@ -89,8 +89,8 @@ const Home = () => {
     },
     homepage: {
       btn: "Получить бесплатную консультацию",
-      title: "Добро пожаловать!",
-      text: "Мы здесь, чтобы помочь вывести ваш бизнес на новый уровень. С нашими качественными услугами и инновационными решениями мы стремимся развивать ваш бренд. Сделайте шаг к успеху вместе с нами!",
+      title: "Digital-маркетинговое агентство для бизнесменов",
+      text: "Привлекаем перспективных клиентов, увеличиваем количество посещений офиса продаж и повышаем конкурентоспособность бизнесменов.",
     },
     services: {
       title: "Наши услуги",
@@ -158,14 +158,17 @@ const Home = () => {
       },
     },
   };
+  const [lan,setLan]=useState("uz");
   const [content, setContent] = useState(contentUz);
   const carousel = document.getElementById("carousel");
   let currentIndex = 0;
   const handleRu = () => {
     setContent(contentRu);
+    setLan('ru');
   };
   const handleUz = () => {
     setContent(contentUz);
+    setLan('uz');
   };
   const [isInView, setIsInView] = useState(false);
   const [toggleMenuOpen, setToggleMenuOpen] = useState("toggleMenu");
@@ -179,7 +182,7 @@ const Home = () => {
       setBurger("mobnav");
     }
   };
- 
+  
 
   const teamCardsRef = useRef([]); //
 
@@ -216,6 +219,9 @@ const Home = () => {
   }, []);
   return (
     <div className="home">
+      <div className="logoPage">
+        <p>invigo.</p>
+      </div>
       <div className="navbar">
         <p className="logo">invigo.</p>
         <ul className="navList">
@@ -261,7 +267,8 @@ const Home = () => {
         </ul>
       </div>
       <div className="homepage">
-        <h1>{content.homepage.title}</h1>
+        {lan=='uz' && (<h1><span>Biznessmanlar</span> uchun digital marketing agentligi</h1>)}
+        {lan=='ru' && (<h1>Digital-маркетинговое агентство для  <span>бизнесменов</span></h1>)}
         <h2>{content.homepage.text}</h2>
 
         <button className="contact-team">
