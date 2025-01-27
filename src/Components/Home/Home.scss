@@ -212,6 +212,44 @@
       }
     }
   }
+  .formData { 
+    background-color: #000;
+    padding: 30px 50px;
+    display: block;
+    h1{
+      color: #fff;
+      text-align: center;
+      margin: 0 0 30px 0;
+    }
+    .listData {
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      grid-template-rows: repeat(1, 1fr);
+      grid-column-gap: 10px;
+      grid-row-gap: 20px;
+      .item {
+        background-color: #121212;
+        padding: 10px 20px;
+        border-radius: 20px;
+        p {
+          color: #fff;
+          width: 80%;
+          margin: 0 0 10px;
+        }
+        .btnDelete{
+          background-color: #174a42;
+          color: #fff;
+          padding: 5px 20px;
+          border: none;
+          border-radius: 10px;
+        }
+      }
+    }
+  }
+  .noFormData{
+    display: none;
+  }
   .footer-container {
     padding: 2rem 1rem;
     text-align: center;
@@ -565,45 +603,45 @@
   }
   @keyframes popup {
     0% {
-        opacity: 0;
-        transform: scale(0.8) translateY(20px); /* Start smaller and slightly lower */
+      opacity: 0;
+      transform: scale(0.8) translateY(20px); /* Start smaller and slightly lower */
     }
     50% {
-        opacity: 1;
-        transform: scale(1.1) translateY(0); /* Slightly overshoot for emphasis */
+      opacity: 1;
+      transform: scale(1.1) translateY(0); /* Slightly overshoot for emphasis */
     }
     100% {
-        opacity: 1;
-        transform: scale(1) translateY(0); /* Settle into place */
+      opacity: 1;
+      transform: scale(1) translateY(0); /* Settle into place */
     }
-}
+  }
 
-@keyframes disappear {
+  @keyframes disappear {
     0% {
-        opacity: 1;
-        transform: scale(1) translateY(0); /* Fully visible */
+      opacity: 1;
+      transform: scale(1) translateY(0); /* Fully visible */
     }
     100% {
-        opacity: 0;
-        transform: scale(0.9) translateY(-10px); /* Fade out while shrinking slightly */
+      opacity: 0;
+      transform: scale(0.9) translateY(-10px); /* Fade out while shrinking slightly */
     }
-}
+  }
 
-@keyframes fadeOut {
+  @keyframes fadeOut {
     0% {
-        opacity: 1;
-        visibility: visible;
+      opacity: 1;
+      visibility: visible;
     }
     90% {
-        opacity: 0.3;
-        visibility: visible; /* Add a slight lingering fade */
+      opacity: 0.3;
+      visibility: visible; /* Add a slight lingering fade */
     }
     100% {
-        opacity: 0;
-        visibility: hidden;
-        display: none; /* Ensure hidden at the end */
+      opacity: 0;
+      visibility: hidden;
+      display: none; /* Ensure hidden at the end */
     }
-}
+  }
   @keyframes fadeIn {
     0% {
       opacity: 0;
@@ -732,8 +770,8 @@
             border-radius: 5px;
             transition: all 0.3s ease;
           }
-          li:first-child{
-            margin:0 20px 20px 0;
+          li:first-child {
+            margin: 0 20px 20px 0;
           }
         }
       }
@@ -741,7 +779,7 @@
         display: none;
       }
     }
-    .logoPage{
+    .logoPage {
       height: 100vh;
     }
     .services {
@@ -770,8 +808,8 @@
         width: 70%;
       }
       h2 {
-        font-size: 0.7rem;
-        max-width: 70%;
+        font-size: 1rem;
+        max-width: 80%;
       }
       .contact-team {
         width: 60%;

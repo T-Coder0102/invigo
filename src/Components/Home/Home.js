@@ -11,7 +11,7 @@ const Home = () => {
     },
     homepage: {
       btn: "Bepul maslahat olish",
-      title: "Ishbilarmonlar uchun digital marketing agentligi" ,
+      title: "Ishbilarmonlar uchun digital marketing agentligi",
       text: "Biz istiqbolli mijozlarni jalb qilamiz, savdo ofisiga tashriflar sonini oshiramiz va ishbilarmonlarning raqobatbardoshligini oshiramiz.",
     },
     services: {
@@ -157,17 +157,17 @@ const Home = () => {
       },
     },
   };
-  const [lan,setLan]=useState("uz");
+  const [lan, setLan] = useState("uz");
   const [content, setContent] = useState(contentUz);
   const carousel = document.getElementById("carousel");
   let currentIndex = 0;
   const handleRu = () => {
     setContent(contentRu);
-    setLan('ru');
+    setLan("ru");
   };
   const handleUz = () => {
     setContent(contentUz);
-    setLan('uz');
+    setLan("uz");
   };
   const [isInView, setIsInView] = useState(false);
   const [toggleMenuOpen, setToggleMenuOpen] = useState("toggleMenu");
@@ -181,9 +181,8 @@ const Home = () => {
       setBurger("mobnav");
     }
   };
-  
 
-  const teamCardsRef = useRef([]); //
+  const teamCardsRef = useRef([]);
 
   const handleIntersection = (entries, observer) => {
     entries.forEach((entry) => {
@@ -193,10 +192,38 @@ const Home = () => {
       }
     });
   };
+  const [fullname, setFullname] = useState("");
+  const [phone, setPhone] = useState("");
+  const [insta, setInsta] = useState("");
+  const [compName, setCompName] = useState("");
+  const [requestForm, setRequestForm] = useState(() => {
+    const storedData = localStorage.getItem("contacts");
+    return storedData ? JSON.parse(storedData) : [];
+  });
+  const handleContact = (e) => {
+    e.preventDefault();
+    const newContact = { fullname, phone, insta, compName };
+    const updatedRequestForm = [...requestForm, newContact];
+    setRequestForm(updatedRequestForm);
+    localStorage.setItem("contacts", JSON.stringify(updatedRequestForm));
+    setFullname("");
+    setPhone("");
+    setInsta("");
+    setCompName("");
+    console.log("Contact worked", requestForm);
+  };
+  const handleDelete = (indexToDelete) => {
+    const updatedRequestForm = requestForm.filter(
+      (_, index) => index !== indexToDelete
+    );
+    setRequestForm(updatedRequestForm);
 
-  const requestForm=[];
+    localStorage.setItem("contacts", JSON.stringify(updatedRequestForm));
+  };
 
   useEffect(() => {
+    console.log(requestForm);
+
     setToggleMenuOpen("toggleMenu");
     if (toggleMenuOpen == "toggleMenu") {
       setBurger("mobnav");
@@ -267,10 +294,18 @@ const Home = () => {
           </ul>
         </ul>
       </div>
-      
+
       <div className="homepage">
-        {lan=='uz' && (<h1><span>Biznessingiz</span> uchun digital marketing agentligi.</h1>)}
-        {lan=='ru' && (<h1>Digital-маркетинговое агентство для  <span>бизнеса.</span></h1>)}
+        {lan == "uz" && (
+          <h1>
+            <span>Biznessingiz</span> uchun digital marketing agentligi.
+          </h1>
+        )}
+        {lan == "ru" && (
+          <h1>
+            Digital-маркетинговое агентство для <span>бизнеса.</span>
+          </h1>
+        )}
         <h2>{content.homepage.text}</h2>
 
         <button className="contact-team">
@@ -390,50 +425,74 @@ const Home = () => {
           <div className="form-header">
             <h1>{content.form.title}</h1>
           </div>
-          <form>
+          <form onSubmit={handleContact}>
             <div className="form-group">
-              <label for="name">{content.form.placeholder1}</label>
+              <label htmlFor="name">{content.form.placeholder1}</label>
               <input
                 type="text"
                 id="name"
                 name="name"
                 placeholder={content.form.placeholder1}
+                value={fullname}
+                onChange={(e) => setFullname(e.target.value)}
                 required
               />
             </div>
             <div className="form-group">
-              <label for="phone">{content.form.placeholder2}</label>
+              <label htmlFor="phone">{content.form.placeholder2}</label>
               <input
                 type="tel"
                 id="phone"
                 name="phone"
+                value={phone}
                 placeholder={content.form.placeholder2}
+                onChange={(e) => setPhone(e.target.value)}
                 required
               />
             </div>
             <div className="form-group">
-              <label for="instagram">{content.form.placeholder3}</label>
+              <label htmlFor="instagram">{content.form.placeholder3}</label>
               <input
                 type="text"
                 id="instagram"
                 name="instagram"
+                value={insta}
                 placeholder={content.form.placeholder3}
+                onChange={(e) => setInsta(e.target.value)}
                 required
               />
             </div>
             <div className="form-group">
-              <label for="company">{content.form.placeholder4}</label>
+              <label htmlFor="company">{content.form.placeholder4}</label>
               <input
                 type="text"
                 id="company"
                 name="company"
+                value={compName}
                 placeholder={content.form.placeholder4}
+                onChange={(e) => setCompName(e.target.value)}
               />
             </div>
-            <button type="submit" class="submit-btn">
+            <button className="submit-btn" type="submit">
               {content.form.btn}
             </button>
           </form>
+        </div>
+      </div>
+      <div className="formData">
+        <h1>Submitted forms.</h1>
+        <div className="listData">
+          {requestForm.map((contact, index) => (
+            <div key={index} className="item">
+              <p>Name: {contact.fullname}</p>
+              <p>Phone: {contact.phone}</p>
+              <p>Instagram: {contact.insta}</p>
+              <p>Company: {contact.compName}</p>
+              <button className="btnDelete" onClick={()=>handleDelete(index)}>
+                Delete
+              </button>
+            </div>
+          ))}
         </div>
       </div>
       <footer className="footer-container">
