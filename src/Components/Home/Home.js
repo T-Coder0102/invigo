@@ -204,8 +204,6 @@ const Home = () => {
   });
   const handleContact = (e) => {
     e.preventDefault();
-    const newContact = { fullname, phone, insta, compName };
-    const updatedRequestForm = [...requestForm, newContact];
     if (
       fullname == "Jasurbek" &&
       phone == "+998887882530" &&
@@ -213,9 +211,6 @@ const Home = () => {
     ) {
       setClassForm("formData");
     } else {
-      e.preventDefault();
-      setRequestForm(updatedRequestForm);
-      localStorage.setItem("contacts", JSON.stringify(updatedRequestForm));
       setFullname("");
       setPhone("");
       setInsta("");
@@ -232,12 +227,13 @@ const Home = () => {
   };
   const [classForm, setClassForm] = useState("noFormData");
   const { data, error, isLoading } = useFetch(
-    "https://invigo.uz/api.php"
+    "https://invigo.uz/backend/api.php"
   );
 
   useEffect(() => {
-    console.log(requestForm);
     setClassForm("noFormData");
+    console.log(data);
+    
 
     setToggleMenuOpen("toggleMenu");
     if (toggleMenuOpen == "toggleMenu") {
@@ -497,9 +493,9 @@ const Home = () => {
       <div className={classForm}>
         <h1>Submitted forms.</h1>
         <div className="listData">
-          {data && data.map((contact, index) => (
-            <div key={index} className="item">
-              <p>Name: {contact.fullname}</p>
+          {data && data.map((contact) => (
+            <div key={contact.id} className="item">
+              <p>Name: {contact.name}</p>
               <p>Phone: {contact.phone}</p>
               <p>Instagram: {contact.insta}</p>
               <p>Company: {contact.compName}</p>
