@@ -1,7 +1,9 @@
 import "./Home.scss";
 import React from "react";
 import { useEffect, useRef, useState } from "react";
+import useFetch from "../../customHooks/useFetch";
 const Home = () => {
+  
   const contentUz = {
     navlist: {
       l1: "Biz haqimizda",
@@ -229,6 +231,9 @@ const Home = () => {
     localStorage.setItem("contacts", JSON.stringify(updatedRequestForm));
   };
   const [classForm, setClassForm] = useState("noFormData");
+  const { data, error, isLoading } = useFetch(
+    "https://invigo.uz/api.php"
+  );
 
   useEffect(() => {
     console.log(requestForm);
@@ -492,13 +497,13 @@ const Home = () => {
       <div className={classForm}>
         <h1>Submitted forms.</h1>
         <div className="listData">
-          {requestForm.map((contact, index) => (
+          {data && data.map((contact, index) => (
             <div key={index} className="item">
               <p>Name: {contact.fullname}</p>
               <p>Phone: {contact.phone}</p>
               <p>Instagram: {contact.insta}</p>
               <p>Company: {contact.compName}</p>
-              <button className="btnDelete" onClick={() => handleDelete(index)}>
+              <button className="btnDelete">
                 Delete
               </button>
             </div>
