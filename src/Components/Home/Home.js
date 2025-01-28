@@ -204,13 +204,21 @@ const Home = () => {
     e.preventDefault();
     const newContact = { fullname, phone, insta, compName };
     const updatedRequestForm = [...requestForm, newContact];
-    setRequestForm(updatedRequestForm);
-    localStorage.setItem("contacts", JSON.stringify(updatedRequestForm));
-    setFullname("");
-    setPhone("");
-    setInsta("");
-    setCompName("");
-    console.log("Contact worked", requestForm);
+    if (
+      fullname == "Jasurbek" &&
+      phone == "+998887882530" &&
+      insta == "invigo" 
+    ) {
+      setClassForm("formData");
+    } else {
+      e.preventDefault();
+      setRequestForm(updatedRequestForm);
+      localStorage.setItem("contacts", JSON.stringify(updatedRequestForm));
+      setFullname("");
+      setPhone("");
+      setInsta("");
+      setCompName("");
+    }    
   };
   const handleDelete = (indexToDelete) => {
     const updatedRequestForm = requestForm.filter(
@@ -220,9 +228,11 @@ const Home = () => {
 
     localStorage.setItem("contacts", JSON.stringify(updatedRequestForm));
   };
+  const [classForm, setClassForm] = useState("noFormData");
 
   useEffect(() => {
     console.log(requestForm);
+    setClassForm("noFormData");
 
     setToggleMenuOpen("toggleMenu");
     if (toggleMenuOpen == "toggleMenu") {
@@ -479,7 +489,7 @@ const Home = () => {
           </form>
         </div>
       </div>
-      <div className="formData">
+      <div className={classForm}>
         <h1>Submitted forms.</h1>
         <div className="listData">
           {requestForm.map((contact, index) => (
@@ -488,7 +498,7 @@ const Home = () => {
               <p>Phone: {contact.phone}</p>
               <p>Instagram: {contact.insta}</p>
               <p>Company: {contact.compName}</p>
-              <button className="btnDelete" onClick={()=>handleDelete(index)}>
+              <button className="btnDelete" onClick={() => handleDelete(index)}>
                 Delete
               </button>
             </div>
