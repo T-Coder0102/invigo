@@ -226,6 +226,7 @@ const Home = () => {
           console.error("Error sending email:", error.text);
         }
       );
+      setData({fullname: "", phone: "", insta: "", compName: ""})
 
     // Reset the form after submission
   };
