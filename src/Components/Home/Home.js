@@ -221,6 +221,7 @@ const Home = () => {
       .then(
         (result) => {
           console.log("Email sent successfully!", result.text);
+          alert("Thank you for your request!!")
         },
         (error) => {
           console.error("Error sending email:", error.text);
