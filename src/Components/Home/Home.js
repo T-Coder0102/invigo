@@ -1,9 +1,9 @@
 import "./Home.scss";
 import React from "react";
 import { useEffect, useRef, useState } from "react";
-import useFetch from "../../customHooks/useFetch";
+import emailjs from "emailjs-com";
+
 const Home = () => {
-  
   const contentUz = {
     navlist: {
       l1: "Biz haqimizda",
@@ -194,46 +194,44 @@ const Home = () => {
       }
     });
   };
-  const [fullname, setFullname] = useState("");
-  const [phone, setPhone] = useState("");
-  const [insta, setInsta] = useState("");
-  const [compName, setCompName] = useState("");
-  const [requestForm, setRequestForm] = useState(() => {
-    const storedData = localStorage.getItem("contacts");
-    return storedData ? JSON.parse(storedData) : [];
-  });
-  const handleContact = (e) => {
-    e.preventDefault();
-    if (
-      fullname == "Jasurbek" &&
-      phone == "+998887882530" &&
-      insta == "invigo" 
-    ) {
-      setClassForm("formData");
-    } else {
-      setFullname("");
-      setPhone("");
-      setInsta("");
-      setCompName("");
-    }    
+  const [data, setData] = useState([
+    { fullname: "", phone: "", insta: "", compName: "" },
+  ]);
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
-  const handleDelete = (indexToDelete) => {
-    const updatedRequestForm = requestForm.filter(
-      (_, index) => index !== indexToDelete
-    );
-    setRequestForm(updatedRequestForm);
 
-    localStorage.setItem("contacts", JSON.stringify(updatedRequestForm));
-  };
   const [classForm, setClassForm] = useState("noFormData");
-  const { data, error, isLoading } = useFetch(
-    "https://invigo.uz/backend/api.php"
-  );
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    // Send the email using EmailJS
+    emailjs
+      .send(
+        process.env.REACT_APP_EMAILJS_SERVICE_ID,
+        process.env.REACT_APP_EMAILJS_TEMPLATE_ID,
+        data,
+        process.env.REACT_APP_EMAILJS_PUBLIC_KEY // Replace with your EmailJS public key
+      )
+      .then(
+        (result) => {
+          console.log("Email sent successfully!", result.text);
+        },
+        (error) => {
+          console.error("Error sending email:", error.text);
+        }
+      );
+
+    // Reset the form after submission
+  };
 
   useEffect(() => {
     setClassForm("noFormData");
-    console.log(data);
-    
 
     setToggleMenuOpen("toggleMenu");
     if (toggleMenuOpen == "toggleMenu") {
@@ -436,7 +434,7 @@ const Home = () => {
           <div className="form-header">
             <h1>{content.form.title}</h1>
           </div>
-          <form onSubmit={handleContact}>
+          <form onSubmit={handleSubmit}>
             <div className="form-group">
               <label htmlFor="name">{content.form.placeholder1}</label>
               <input
@@ -444,8 +442,8 @@ const Home = () => {
                 id="name"
                 name="name"
                 placeholder={content.form.placeholder1}
-                value={fullname}
-                onChange={(e) => setFullname(e.target.value)}
+                value={data.fullname}
+                onChange={handleInputChange}
                 required
               />
             </div>
@@ -455,9 +453,9 @@ const Home = () => {
                 type="tel"
                 id="phone"
                 name="phone"
-                value={phone}
+                value={data.phone}
                 placeholder={content.form.placeholder2}
-                onChange={(e) => setPhone(e.target.value)}
+                onChange={handleInputChange}
                 required
               />
             </div>
@@ -466,10 +464,10 @@ const Home = () => {
               <input
                 type="text"
                 id="instagram"
-                name="instagram"
-                value={insta}
+                name="insta"
+                value={data.insta}
                 placeholder={content.form.placeholder3}
-                onChange={(e) => setInsta(e.target.value)}
+                onChange={handleInputChange}
                 required
               />
             </div>
@@ -478,10 +476,10 @@ const Home = () => {
               <input
                 type="text"
                 id="company"
-                name="company"
-                value={compName}
+                name="compName"
+                value={data.compName}
                 placeholder={content.form.placeholder4}
-                onChange={(e) => setCompName(e.target.value)}
+                onChange={handleInputChange}
               />
             </div>
             <button className="submit-btn" type="submit">
@@ -490,22 +488,21 @@ const Home = () => {
           </form>
         </div>
       </div>
-      <div className={classForm}>
+      {/* <div className="formData">
         <h1>Submitted forms.</h1>
         <div className="listData">
-          {data && data.map((contact) => (
-            <div key={contact.id} className="item">
-              <p>Name: {contact.name}</p>
-              <p>Phone: {contact.phone}</p>
-              <p>Instagram: {contact.insta}</p>
-              <p>Company: {contact.compName}</p>
-              <button className="btnDelete">
-                Delete
-              </button>
-            </div>
-          ))}
+          {data &&
+            data.map((contact) => (
+              <div key={contact.id} className="item">
+                <p>Name: {contact.name}</p>
+                <p>Phone: {contact.phone}</p>
+                <p>Instagram: {contact.insta}</p>
+                <p>Company: {contact.compName}</p>
+                <button className="btnDelete">Delete</button>
+              </div>
+            ))}
         </div>
-      </div>
+      </div> */}
       <footer className="footer-container">
         <div className="footer-list">
           <div className="firstPart">
